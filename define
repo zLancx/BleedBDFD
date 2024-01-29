@@ -1,0 +1,27 @@
+
+
+(prefix)define
+$nomention
+$reply
+$allowUserMentions[]
+$if[$message[1]==]
+$authorIcon[$userAvatar[$botID]]
+$author[$username[$botID] help]
+$title[help: define]
+$description[Get definition of a word
+```Syntax: ,define (word)
+Example: ,define alive
+```]
+$color[#2b2d31]
+$else
+$httpGet[https://api.dictionaryapi.dev/api/v2/entries/en/$toLowercase[$message[1]]]
+$if[$httpResult[0;meanings;0;definitions;0;definition]==]
+$description[🔎 <@$authorID>: No **definition** found for `$message[1]`]
+$color[7289da]
+$else
+$title[$toLowercase[$message[1]]]
+$description[
+$httpResult[0;meanings;0;definitions;0;definition]]
+$color[ffffff]
+$endif
+$endif 
