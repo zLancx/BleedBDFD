@@ -1,0 +1,11 @@
+
+Credits to: roadman for making this code.
+
+(prefix)ping
+code:
+$nomention
+$var[msgid;$sendMessage[ping...;yes]]
+
+$editMessage[$channelID;$var[msgid];
+it took `$calculate[$ping + 11]ms` to ping **$randomText[a connection to the server;your dad;your mom;bleed;.gg/edate;jakes address;ghouls home; the chinese government; 6ix9ines ankle monitor; localhost; north korea; beloved Cyle; epimp in your mom; sand; riot; daria edates;my dad;my mom:]** (edit: `$calculate[($var[msgid] / 4194304 + 1420070400000) - ($messageID / 4194304 + 1420070400000)]ms`)
+]
