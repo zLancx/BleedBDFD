@@ -1,0 +1,96 @@
+(prefix)roblox
+$nomention
+$onlyIf[$guildID!=;]
+$suppressErrors
+
+ 
+$if[$getCooldown[normal]>=1]
+$description[<:cooldown:988275407616876565> <@$authorID>: Please wait $trimSpace[$if[$getCooldown[normal]==1]**1 Second** $else **$getCooldown[normal] Seconds**$endif] before using this command again]
+$color[#50c8ef]
+$deleteIn[4s]
+ 
+$else
+ 
+$cooldown[4s;]
+ 
+$if[$message[1]==]
+$sendEmbedMessage[$channelID;;Command roblox;;gets info on the given roblox username
+```Syntax: ,roblox <user>
+Example: ,roblox roblox```;;bot name help;$userAvatar[$botID]]
+ 
+$else
+ 
+$httpPost[https://users.roblox.com/v1/usernames/users;
+{
+  "usernames": [
+    "$message[1]"
+  \],
+  "excludeBannedUsers": false
+}]
+$if[$httpResult[data]==[\]]
+$description[<:warning:1190758806062383255> <@$authorID>: No **roblox account** found for [`$message`\](https://roblox.com/$message)]
+$color[#faa61a]
+ 
+$else
+ 
+$var[id;$httpResult[data;0;id]]
+ 
+$async[t]
+$httpGet[https://users.roblox.com/v1/users/$var[id]]
+$var[create;$httpResult[created]]
+$var[name;$httpResult[name]]
+$var[isbanned;$httpResult[isBanned]]
+$var[dname;$httpResult[displayName]]
+$var[des;$httpResult[description]]
+$endasync
+$await[t]
+ 
+$async[lo]
+$httpPost[https://presence.roblox.com/v1/presence/users;{
+  "userIds": [
+    $var[id]
+  \]
+}]
+$var[loo;$httpResult[userPresences;0;lastOnline]]
+$var[pres
+;$httpResult[userPresences;0;userPresenceType]]
+$endasync
+$await[lo]
+ 
+$async[laston]
+$httpGet[https://helloacm.com/api/unix-timestamp-converter/?cached&s=$url[encode;$var[loo]]]
+$var[stamp;$httpResult]
+$endasync
+$await[laston]
+ 
+$async[created]
+$httpGet[https://helloacm.com/api/unix-timestamp-converter/?cached&s=$url[encode;$var[create]]]
+$var[created;$httpResult]
+$endasync
+$await[created]
+ 
+$async[av]
+$httpGet[https://thumbnails.roblox.com/v1/users/avatar?userIds=$var[id]&size=720x720&format=Png&isCircular=false]
+$var[av;$httpResult[data;0;imageUrl]]
+$endasync
+$await[av]
+ 
+$author[$nickname[$authorID]]
+$authorIcon[$userServerAvatar[$authorID]]
+$title[$var[dname] (@$var[name]) $if[$var[isbanned]==true](Banned)$endif ]
+$embeddedURL[https://www.roblox.com/users/$var[id]/profile]
+$thumbnail[$var[av]]
+$if[$var[des]!=]$description[$cropText[$var[des];150;...]]$endif
+$addField[Created;<t:$var[created]:D>;yes]
+$addField[Last Online;<t:$var[stamp]:R>;yes]
+$addField[Presence;$trimSpace[$if[$var[pres]==2]online $else offline$endif];yes]
+$addField[ID; $var[id]]
+
+$footer[User ID: $var[id]]
+$footerIcon[https://cdn.discordapp.com/attachments/1012090158704766996/1023759583988174918/cachedImage.png]
+$endif
+$endif
+ 
+$endif
+$endif
+$endif
