@@ -1,0 +1,36 @@
+Lang: BDScript2
+Variables: False
+
+(prefix)movie
+$nomention
+$if[$message==]
+$authorIcon[$userAvatar[$botID]]
+$author[$username[$botID]]
+$title[>_]
+$description[Returns information about the specified movie title given
+```
+Syntax: ,movie <title>
+Example: ,movie Oppenheimer
+```]
+$else
+$httpGet[https://api.popcat.xyz/imdb?q=$url[encode;$message]]
+$if[$httpResult[title]==]
+$description[🔎 <@$authorID>: No results were found for **$message**]
+$color[7289da]
+$else
+$nomention
+$embedSuppressErrors[; Couldn't Load The Embed.]
+$thumbnail[$httpResult[poster]]
+$color[#000080]
+$title[$httpResult[title]]
+$addField[Released; $httpResult[released]]
+$addField[Length; $httpResult[runtime]]
+$addField[Rated; $httpResult[rated]]
+$addField[Awards; $httpResult[awards]]
+$addField[Genre; $httpResult[genres]]
+$addField[IMDb Score; $httpResult[rating]]
+$addField[Series; $httpResult[series]]
+$addField[Type; $httpResult[type]]
+$addField[Description; $httpResult[plot]]
+$endif
+$endif
