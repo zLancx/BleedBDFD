@@ -1,0 +1,18 @@
+BD2
+Var:False
+
+(prefix)lock
+$nomention
+$embedSuppressErrors[;;#faa61a;]
+$onlyPerms[managechannels; <:warning:1190758806062383255> <@$authorID>: You're **missing** permission: `manage_channels`]
+$modifyChannelPerms[$mentionedChannels[1;yes];-sendmessages;$guildID]
+$description[ 🔒 <@$authorID>: <#$mentionedChannels[1;yes]> locked. Use `,unlock #$channelName[$mentionedChannels[1;yes]]` to remove this lockdown]
+$color[#faa61a]
+
+(prefix)unlock
+$nomention
+$embedSuppressErrors[;;#faa61a;]
+$onlyPerms[managechannels; <:warning:1190758806062383255> <@$authorID>: You're **missing** permission: `manage_channels`]
+$modifyChannelPerms[$mentionedChannels[1;yes];+sendmessages;$guildID]
+$description[ 🔓 <@$authorID>: <#$mentionedChannels[1;yes]> unlocked - check permissions if previously hidden]
+$color[#faa61a]
