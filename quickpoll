@@ -1,0 +1,12 @@
+(prefix)quickpoll
+$nomention
+$if[$message[1]==]
+
+$nomention
+bruh u gon say sum ...?
+
+$else
+$nomention
+$addCmdReactions[⬆️;⬇️]
+
+$endif
