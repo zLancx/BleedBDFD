@@ -1,0 +1,11 @@
+List:
+- Would you rather
+
+(prefix)wyr
+$nomention
+$httpGet[https://api.popcat.xyz/wyr]
+**Would you rather:**
+🅰️ $httpResult[ops1] 
+**OR**
+🅱️ $httpResult[ops2]
+$addReactions[🅰️;🅱️]
