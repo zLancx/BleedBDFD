@@ -1,0 +1,88 @@
+About this command: Used for granting a role to a member.
+
+Prefix: just use your bot PREFIX!
+(prefix)
+$nomention
+$onlyIf[$guildID!=;]
+ 
+$if[$or[$toLowercase[$message[1]]==role]==true]
+ 
+$if[$checkUserPerms[$authorID;manageroles]==false]
+$description[<:warning:1190758806062383255> <@$authorID>: You’re missing the permission `manage_roles`] 
+$color[#faa61a]
+ 
+$else
+ 
+$if[$message[2]==]
+$sendEmbedMessage[$channelID;;help: role;;grant/remove a role
+```Syntax: ,role <member> <role>
+Examaple ,role $username[$botID] cool```;$getVar[color;$botID]bot name help;$userServerAvatar[$botID]]
+ 
+$else
+ 
+$if[$message[3]==]
+$description[<:warning:1190758806062383255> <@$authorID>: Please provide a role to grant/remove]
+$color[#faa61a]
+ 
+$else
+ 
+$if[$userExists[$findUser[$message[2];no]]==false]
+$description[<:deny:1190759505575809064> <@$authorID>: I can not find that user]
+$color[#eb6a6e]
+ 
+$else
+ 
+$embedSuppressErrors[;;#eb6a6e]
+$if[$authorID!=$serverOwner]
+ 
+$onlyIf[$roleExists[$findRole[$message[3]]]!=false;<:deny:1190759505575809064>  <@$authorID>: The given role name/ID doesn’t exist]
+$onlyIf[$findUser[$message[2]]!=$botID;<:deny:1190759505575809064> <@$authorID>: Leave me alone]
+$onlyIf[$rolePosition[$highestRole[$botID]]<$rolePosition[$findRole[$message[3]]];<:deny:1190759505575809064> <@$authorID>: I can’t grant/remove a role **higher** than **me**]
+$onlyIf[$rolePosition[$highestRole[$botID]]!=$rolePosition[$highestRole[$findUser[$message[2]]]];<:deny:1190759505575809064> <@$authorID>: I can’t role someone with the **same role** as **me**]
+$onlyIf[$rolePosition[$highestRole[$botID]]!=$rolePosition[$findRole[$message[3]]];<:deny:1190759505575809064> <@$authorID>: I can’t grant/remove my **highest role**]
+$onlyIf[$rolePosition[$highestRole[$botID]]<$rolePosition[$highestRole[$findUser[$message[2]]]];<:deny:1190759505575809064> <@$authorID>: The user you want to role has a **higher role** than **me**]
+$onlyIf[$rolePosition[$highestRole[$authorID]]!=$rolePosition[$findRole[$message[3]]];<:deny:1190759505575809064> <@$authorID>: You can’t grant/remove your **top role**]
+$onlyIf[$rolePosition[$highestRole[$authorID]]<$rolePosition[$findRole[$message[3]]];<:deny:1190759505575809064> <@$authorID>: You can’t grant/remove a role thats **higher** than you]
+ 
+$if[$hasRole[$findUser[$message[2]];$findRole[$message[3]]]==true]
+$description[<:remove:1195777627303202896> <@$authorID>: Removed <@&$findRole[$message[3]]> from <@$findUser[$message[2]]>]
+$color[#36a9e0]
+ 
+$roleGrant[$findUser[$message[2]];-$findRole[$message[3]]]
+ 
+$else
+ 
+$description[<:add:1190759427284926646> <@$authorID>: Added <@&$findRole[$message[3]]> to <@$findUser[$message[2]]>]
+ 
+$roleGrant[$findUser[$message[2]];+$findRole[$message[3]]] 
+$color[#36a9e0]
+$endif
+ 
+$else
+ 
+$onlyIf[$roleExists[$findRole[$message[3]]]!=false;<:deny:1190759505575809064><@$authorID>: The given role name/ID doesn’t exist.]
+$onlyIf[$findUser[$message[2]]!=$botID;<:deny:1190759505575809064> <@$authorID>: Leave me alone.]
+$onlyIf[$rolePosition[$highestRole[$botID]]<$rolePosition[$findRole[$message[3]]];<:deny:959066236875079730> <@$authorID>: I can’t grant/remove a role **higher** than **me**]
+$onlyIf[$rolePosition[$highestRole[$botID]]!=$rolePosition[$findRole[$message[3]]];<:deny:959066236875079730> <@$authorID>: I can’t grant/remove my **highest role**.]
+$onlyIf[$rolePosition[$highestRole[$botID]]!=$rolePosition[$highestRole[$findUser[$message[2]]]];<:deny:959066236875079730> <@$authorID>: I can’t role someone with the **same role** as **me**]
+$onlyIf[$rolePosition[$highestRole[$botID]]<$rolePosition[$highestRole[$findUser[$message[2]]]];<:deny:959066236875079730> <@$authorID>: The user you want to role has a **higher role** than **me**]
+ 
+$if[$hasRole[$findUser[$message[2]];$findRole[$message[3]]]==true]
+$description[<:remove:1195777627303202896> <@$authorID>: Removed <@&$findRole[$message[3]]> from <@$findUser[$message[2]]>]
+$color[#36a9e0]
+ 
+$roleGrant[$findUser[$message[2]];-$findRole[$message[3]]]
+ 
+$else
+ 
+$description[<:add:1195223783196340244> <@$authorID>: Added <@&$findRole[$message[3]]> to <@$findUser[$message[2]]>]
+ 
+$roleGrant[$findUser[$message[2]];+$findRole[$message[3]]] 
+$color[#36a9e0]
+$endif
+$endif
+$endif
+$endif
+$endif
+$endif
+$endif
