@@ -1,0 +1,27 @@
+(prefix)weather
+$nomention
+$if[$message==]
+$authorIcon[$userAvatar[$botID]]
+$author[$username[$botID]]
+$title[>_]
+$description[Gets simple weather using openweathermap API
+```Syntax: ,weather (location)
+Example: ,weather Los Angeles
+```]
+$else
+$httpGet[https://api.popcat.xyz/weather?q=$url[encode;$message]]
+$if[$httpResult[0;location;name]==]
+$description[<:warning:1200080333824065687> <@$authorID>: No location was found for: **$message**]
+$color[#faa61a]
+$else
+$title[$httpResult[0;current;skytext] in $httpResult[0;location;name]]
+$addField[Date;$httpResult[0;current;day], $httpResult[0;current;date]]
+$addField[Observation;$httpResult[0;current;observationtime], $httpResult[0;current;observationpoint]]
+$addField[Temperature; $httpResult[0;current;temperature]°$httpResult[0;location;degreetype] ]
+$addField[Feels Like; $httpResult[0;current;feelslike]]
+$addField[Wind; $httpResult[0;current;windspeed]]
+$addField[Humidity; $httpResult[0;current;humidity]%]
+$thumbnail[$httpResult[0;current;imageUrl]]
+$color[$random[10000;99999]]
+$endif
+$endif
