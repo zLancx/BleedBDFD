@@ -1,0 +1,8 @@
+(prefix)av
+bdscript unstable
+$nomention
+$title[$username[$replaceText[$replaceText[$checkCondition[$noMentionMessage==];false;$replaceText[$replaceText[$isNumber[$message];true;$message;-1];false;$userID[$message];-1];-1];true;$mentioned[1;yes];-1]]'s avatar]
+$image[$userAvatar[$replaceText[$replaceText[$checkCondition[$noMentionMessage==];false;$replaceText[$replaceText[$isNumber[$message];true;$message;-1];false;$userID[$message];-1];-1];true;$mentioned[1;yes];-1]]?size=2048]
+$embeddedURL[$userAvatar[$replaceText[$replaceText[*$mentioned[<]*;**;$authorID;1];*$mentioned[<]*;$mentioned[<];1]]?size=4096]
+$authorIcon[$authorAvatar]
+$author[$username[$authorID]]
