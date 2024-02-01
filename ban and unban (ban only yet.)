@@ -96,3 +96,90 @@ $endif
  
 $endif
 $endif
+
+
+alt. credits to rbxloot!
+
+(prefix)ban
+$nomention
+ 
+$c[Find the user]
+$if[$message[1]!=]
+$var[user;$findUser[$message[1]]]
+$if[$var[user]==]
+$var[user;THERE WAS AN ERROR SETTING THE USER TO BAN, MAKE SURE YOU USE THE COMMAND CORRECTLY]
+$endif
+$elseif[$message[user]!=]
+$var[user;$message[user]]
+$elseif[$mentioned[1]!=]
+$var[user;$mentioned[1]]
+$else
+$var[user;THERE WAS AN ERROR SETTING THE USER TO BAN, MAKE SURE YOU USE THE COMMAND CORRECTLY]
+$endif
+$c[Check if its a DM channel]
+$if[$guildID==]
+$sendEmbedMessage[$dmChannelID[$authorID];;❌ Servers only!;;Im sorry but I cant ban someone from your DMs! Go onto their profile, click the 3 dots and then click block if you dont like them!;EF4040;;;Powered by $username[$botID];;;;yes;no]
+ 
+$c[Check if the bot has the right permissions]
+$elseif[$checkUserPerms[$botID;ban;sendmessages;readmessages;readmessagehistory]==false]
+$try
+$c[If it cant send the embed it will dm the user with the error instead]
+$sendEmbedMessage[$channelID;;❌ Invalid bot permissions!;;<@$botID> doesnt have administrator permissions, please give the bot the correct permissions so its able to ban users.;EF4040;;;Powered by $username[$botID];;;;yes;no]
+$catch
+$if[$isUserDMEnabled[$authorID]==true]
+$sendEmbedMessage[$dmChannelID[$authorID];;❌ Error occured!;;Error occured in `$error[command]`:```$error[message]```;EF4040;;;Powered by $username[$botID];;;;yes;no]
+$endif
+$endtry
+$c[Check if the user themselves have banperms or the role]
+$elseif[$and[$checkUserPerms[$authorID;ban]==false;$hasRole[$authorID;$findRole[banperms]]==false;$hasRole[$authorID;$findRole[ban]]==false]==true]
+$sendEmbedMessage[$channelID;;❌ Missing permissions!;;You are missing the `ban` permissions to use this command, this command is for moderators of the server only;EF4040;;;Powered by $username[$botID];;;;yes;no]
+ 
+$elseif[$and[$var[user]==THERE WAS AN ERROR SETTING THE USER TO BAN, MAKE SURE YOU USE THE COMMAND CORRECTLY;$message[1]==;$mentioned[1;no]==]==true]
+$sendEmbedMessage[$channelID;;❌ No user given!;;You didnt specify a user! Either ping them or say their name depending on usage!;EF4040;;;Powered by $username[$botID];;;;yes;no]
+ 
+$c[Check if the user even exists]
+$elseif[$or[$userExists[$var[user]]==false;$var[user]==THERE WAS AN ERROR SETTING THE USER TO BAN, MAKE SURE YOU USE THE COMMAND CORRECTLY]==true]
+$sendEmbedMessage[$channelID;;❌ User doesnt exist!;;I couldnt find a user using: $var[user], are you sure you entered it correctly?;EF4040;;;Powered by $username[$botID];;;;yes;no]
+ 
+$c[Dont let them ban the bot]
+$elseif[$var[user]==$botID]
+$sendEmbedMessage[$channelID;;❌ Invalid User!;;I cannot ban myself! Click on my profile and kick me using discords built in kick function if you dont need me anymore;EF4040;;;Powered by $username[$botID];;;;yes;no]
+ 
+$c[Dont let them ban the server owner]
+$elseif[$var[user]==$serverOwner]
+$sendEmbedMessage[$channelID;;❌ Invalid User!;;I cannot ban the server owner! Thats just impossible! Try someone else!;EF4040;;;Powered by $username[$botID];;;;yes;no]
+ 
+ 
+$c[Dont let them ban someone higher than the bot]
+$elseif[$rolePosition[$highestRole[$botID]]>$rolePosition[$highestRole[$var[user]]]]
+$sendMessage[$rolePosition[$highestRole[$botID]]bot and user$rolePosition[$highestRole[$var[user]]]]
+$sendEmbedMessage[$channelID;;❌ Invalid User!;;I cannot ban someone higher than me, move my role to the top of the role list and try again!;EF4040;;;Powered by $username[$botID];;;;yes;no]
+ 
+$c[Dont let them ban someone higher than the user themselves]
+$elseif[$rolePosition[$highestRole[$authorID]]>$rolePosition[$highestRole[$var[user]]]]
+$sendEmbedMessage[$channelID;;❌ Invalid User!;;You cannot ban someone with higher roles than you!;EF4040;;;Powered by $username[$botID];;;;yes;no]
+ 
+$else
+$if[$message[2]!=]
+$var[reason;$replaceText[$message;$message[1]];;1]
+$elseif[$message[reason]!=]
+$var[reason;$message[reason]]
+$else
+$var[reason;No reason supplied]
+$endif
+$try
+$c[API structure: http://api.walat.uk/cooldown/(get or set)/(command name)/(userid or an id)/(if setting: time in seconds)]
+$c[Using $authorID$guildID so that the cooldown is for the user in the server not global, if you just put $authorID it will put them on cooldown in every server for that command]
+$httpGet[http://api.walat.uk/cooldown/get/ban/$authorID$guildID]
+$if[$httpResult[timestamp]>$getTimestamp]
+$sendEmbedMessage[$channelID;;❌ Cooldown;;You can only use this command once every minute to prevent raiding;EF4040;;;Powered by $username[$botID];;;;yes;no]
+$onlyIf[1==2;]
+$endif
+$httpGet[http://api.walat.uk/cooldown/set/ban/$authorID$guildID/60]
+$sendEmbedMessage[$dmChannelID[$var[user]];;Banned!;;You were banned from $serverName[$guildID]!
+ 
+Reason: ```$var[reason]```;2F3136;;;Powered by $username[$botID];;;;yes;no]
+$endtry
+$banID[$var[reason];$var[user]]
+$sendEmbedMessage[$channelID;;Successfully;;Successfully banned <@$findUser[$var[user]];A8DF8E;;;Powered by $username[$botID];;;;yes;no]
+$endif
