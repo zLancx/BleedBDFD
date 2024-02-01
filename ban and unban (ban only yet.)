@@ -1,0 +1,98 @@
+Use only your bot prefix or other wise it wont work!
+
+(bot prefix only!!!)
+$nomention
+$onlyIf[$guildID!=;]
+ 
+$if[$toLowercase[$message[1]]==ban]
+ 
+$if[$getCooldown[normal]>=1]
+$description[<:cooldown:1200079809301192806> <@$authorID>: Please wait $trimSpace[$if[$getCooldown[normal]==1]**1 Second** $else **$getCooldown[normal] Seconds**$endif] before using this command again]
+$color[#50c8ef]
+$deleteIn[4s]
+ 
+$else
+$cooldown[4s;]
+ 
+$if[$checkUserPerms[$authorID;ban]==false]
+$description[<:warning:1200080333824065687>  <@$authorID>: You’re missing the permission `ban`]
+$color[#faa61a]
+$else
+$if[$message[2]==]
+ 
+$sendEmbedMessage[$channelID;;help: ban;;bans the member from the guild
+```Syntax: ,ban <member>
+Example: ,ban $username[$botID]```;;$username[$botID] help;$userServerAvatar[$botID]]
+ 
+$else
+ 
+$if[$userExists[$findUser[$replaceText[$message;$message[1];;1];no]]==false]
+$description[<:deny:1200080001329016892> <@$authorID>: I can not find that user]
+$color[#eb6a6e]
+ 
+$else
+ 
+$reply
+ 
+$if[$authorID!=$serverOwner]
+$if[$findUser[$replaceText[$message;$message[1];;1]]==$serverOwner]
+$description[<:deny:1200080001329016892> <@$authorID>: You cant ban the **owner**]
+$color[#eb6a6e]
+$elseif[$findUser[$replaceText[$message;$message[1];;1]]==$botID]
+$description[<:deny:1200080001329016892> <@$authorID>: Leave me alone.]
+$color[#eb6a6e]
+$elseif[$findUser[$replaceText[$message;$message[1];;1]]==$authorID]
+$description[<:deny:1200080001329016892> <@$authorID>: You cant ban **yourself**]
+$color[#eb6a6e]
+$elseif[$rolePosition[$highestRole[$authorID]]==$rolePosition[$highestRole[$findUser[$replaceText[$message;$message[1];;1]]]]]
+$description[<:deny:1200080001329016892> <@$authorID>: You can’t ban someone with the **same role** as **you**]
+$color[#eb6a6e]
+$elseif[$rolePosition[$highestRole[$authorID]]>$rolePosition[$highestRole[$findUser[$replaceText[$message;$message[1];;1]]]]]
+$description[<:deny:1200080001329016892> <@$authorID>: You can't ban someone who has a **higher role** than **you**]
+$color[#eb6a6e]
+$elseif[$rolePosition[$highestRole[$botID]]>$rolePosition[$highestRole[$findUser[$replaceText[$message;$message[1];;1]]]]]
+$description[<:deny:1200080001329016892> <@$authorID>: The user you want to ban has a **higher role** than **me**, so i can’t ban]
+$color[#eb6a6e]
+$elseif[$rolePosition[$highestRole[$botID]]==$rolePosition[$highestRole[$findUser[$replaceText[$message;$message[1];;1]]]]]
+$description[<:deny:1200080001329016892> <@$authorID>: I can’t bab someone with the **same role** as **me**]
+$color[#eb6a6e]
+ 
+$else
+ 
+$var[id;$findUser[$replaceText[$message;$message[1];;1]]]
+$ban[$var[id]]
+$sendMessage[👍]
+$endif
+ 
+$else
+ 
+$if[$findUser[$replaceText[$message;$message[1];;1]]==$botID]
+$description[<:deny:1200080001329016892> <@$authorID>: Leave me alone.]
+$color[#eb6a6e]
+ 
+$elseif[$findUser[$replaceText[$message;$message[1];;1]]==$authorID]
+$description[<:deny:1200080001329016892> <@$authorID>: You cant ban **yourself**]
+$color[#eb6a6e]
+ 
+$elseif[$rolePosition[$highestRole[$botID]]==$rolePosition[$highestRole[$findUser[$replaceText[$message;$message[1];;1]]]]]
+$description[<:deny:1200080001329016892> <@$authorID>: I can’t ban someone with the **same role** as **me**]
+$color[#eb6a6e]
+ 
+$elseif[$rolePosition[$highestRole[$botID]]>$rolePosition[$highestRole[$findUser[$replaceText[$message;$message[1];;1]]]]]
+$description[<:deny:1200080001329016892> <@$authorID>: The user you want to ban has a **higher role** than **me**, so i can’t ban]
+$color[#eb6a6e]
+ 
+$else
+ 
+$var[id;$findUser[$replaceText[$message;$message[1];;1]]]
+$ban[$var[id]]
+$sendMessage[👍]
+ 
+$endif
+$endif
+$endif
+$endif
+$endif
+ 
+$endif
+$endif
