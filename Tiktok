@@ -1,0 +1,31 @@
+(prefix)tiktok
+$nomention
+$if[$message==]
+$botTyping
+$authorIcon[$userAvatar[$botID]]
+$author[$username[$botID]]
+$title[>_]
+$description[Gets profile information on the given TikTok user
+```Syntax: ,tiktok (username)
+Example: ,tiktok kyliejenner
+```]
+$else
+$httpGet[https://edgabot.akiomae.com/api/tiktokAPI/index.php?user=$url[encode;$message]]
+$if[$httpResult[user;profileName]==]
+$description[<:warning:1200080333824065687> <@$authorID>: [`$message`\](https://tiktok.com/@$message) is an **invalid TikTok account**]
+$color[#faa61a]
+$else
+$botTyping
+$authorIcon[$userAvatar[$authorID]]
+$author[$displayName[$authorID]]
+$thumbnail[$httpResult[user;avatar]]
+$title[ $httpResult[user;username] (@$httpResult[user;profileName]) $if[$httpResult[user;verified]==true]☑️$endif]
+$description[$httpResult[user;description]]
+$addField[Likes; $numberSeparator[$httpResult[stats;like]]]
+$addField[Followers; $numberSeparator[$httpResult[stats;follower]]]
+$addField[Following; $numberSeparator[$httpResult[stats;following]]]
+$embeddedURL[https://www.tiktok.com/@$message]
+$footer[Tiktok]
+$footerIcon[https://media.discordapp.net/attachments/1202859369360785429/1202932889650733067/IMG_20240202_190539.png?ex=65cf418e&is=65bccc8e&hm=63d9297ba049328bce4b5cdccad8efe627d1dcd3766732846c4b92ebc3640c70&]
+$endif
+$endif
