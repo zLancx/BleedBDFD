@@ -1,0 +1,66 @@
+(prefix)purge
+$c[=======MAKE SURE YOU KNOW WHAT YOU'RE DOING TO MAKE IT WORK!=====]
+$c[if you complain that it doesn't work probably you messed around with the code.]
+$nomention
+$if[$message==]
+$embedSuppressErrors[;;#faa61a;]
+$onlyPerms[managemessages; <:warning:1200080333824065687> <@$authorID>: You're **missing** permission: `manage_messages`]
+$allowMention
+$authorIcon[$userAvatar[$botID]]
+$author[thrive]
+$title[>_]
+$description[Deletes the specified amount of messages from the current channel
+```Syntax: purge (user) <amount>
+Example: purge thrive 30```]
+$else
+$deletecommand
+$embedSuppressErrors[;;#faa61a;]
+$onlyPerms[managemessages; <:warning:1200080333824065687> <@$authorID>: You're **missing** permission: `manage_messages`]
+$allowMention
+ 
+$onlyIf[$isNumber[$message[1]]==true;]
+ 
+$var[user;$findUser[$message[1];no]]
+ 
+ 
+$if[$var[user]==]
+$onlyIf[$isNumber[$message[1]]==true;]
+$try
+$deleteIn[2s]
+$clear[$message[1]]
+purged `$message` messages
+$catch
+$sendMessage[edit this error ur own]
+$endtry
+ 
+$if[$message[1]>=100]
+$var[1;$divide[$message[1];2]]
+ 
+$try
+$async[a]
+$clear[$var[1]]
+$endasync
+$await[a]
+$async[b]
+$clear[$var[1]]
+$endasync
+ 
+$catch
+$sendMessage[here too!]
+$endtry
+ 
+$endif
+ 
+ 
+$else
+ 
+$var[user;$findUser[$message[2];no]]
+ 
+ 
+$onlyIf[$isNumber[$message[1]]==true;]
+$try
+$clear[$message[1];$var[user]]
+$catch
+$sendMessage[edit ur error message for month old purging]
+$endtry
+$endif
