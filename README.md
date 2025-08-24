@@ -1,7 +1,19 @@
-# BleedBDFD
-My Bleed Commands Snippets Fixed and no errors. If you encounter any errors just ping(@mrmisterofficial) me in the bdfd official server
+# **BleedBDFD**  
+A collection of **Bleed Command snippets** for BDFD, tested and fixed to ensure zero errors. (some may vary.)
+If you run into any issues, feel free to ping **[@s6upa]** in the official **BDFD Discord Server**.
 
-### Future Projects & Suggest Here&nbsp;&nbsp;&nbsp;[![](https://dcbadge.vercel.app/api/server/6N4kZyYhK7)](https://discord.com/invite/6N4kZyYhK7)
+---
 
-# Contribute
-if you wish to contribute or help. you can pull a request in the  section of "pull request" i will give you credits in the commands if you do help me thanks.
+## Archived Notice
+This project is **archived** and will **not receive any new snippets or updates**.  
+I only revised and organized the repository to remove clutter and fix existing errors.  
+
+---
+
+## **Future Projects & Suggestions**
+Have an idea or a feature request?  
+Join our community and share your suggestions:  
+[![](https://dcbadge.vercel.app/api/server/6N4kZyYhK7)](https://discord.com/invite/6N4kZyYhK7)
+
+---
+
