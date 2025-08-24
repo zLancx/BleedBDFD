@@ -13,7 +13,7 @@ I only revised and organized the repository to remove clutter and fix existing e
 ## **Future Projects & Suggestions**
 Have an idea or a feature request?  
 Join our community and share your suggestions:  
-[![](https://dcbadge.vercel.app/api/server/6N4kZyYhK7)](https://discord.com/invite/6N4kZyYhK7)
+[![Join](https://dcbadge.vercel.app/api/server/ydWJzUGJQm)](https://discord.com/invite/ydWJzUGJQm)
 
 ---
 
